@@ -11,14 +11,17 @@ let started = false;
 let score = 0;
 let scoreFont, scoreNumber;
 let flapSound, hitSound, plusSound;
-let bgm;
-//bgm;
+let bgMusic;
+let bubbleImg;
+let bubbles = [];
+const Max_BUBBLES = 8;
 
 /* ----------------- Globals ----------------- */
 let bird, birdIdle, birdFlap, underWater, seaweed, gameOver;
 let pipes = [];
  
 let spawnCounter = 0; // timer
+let bubbleCounter = 0; // bubble timer
 const SPAWN_RATE = 90; // ~ every 90 frames at 60fps ≈ 1.5s
 const PIPE_SPEED = 3;
 let PIPE_GAP = 180; // gap height (try 100–160)
@@ -26,17 +29,17 @@ const PIPE_W = 60;
 
 /* ----------------- Setup & Draw ----------------- */
 function preload() {
-  birdIdle = loadImage("bloop1.png"); // idle state
-  birdFlap = loadImage("bloop2.png"); // flapping state
-  underWater = loadImage("FLAPPYbg.png");
-  seaweed = loadImage("FLAPPYseaweed.png");
-  scoreFont = loadFont("RUSHDAFunky.ttf");
+  birdIdle = loadImage("image/bloop1.png"); // idle state
+  birdFlap = loadImage("image/bloop2.png"); // flapping state
+  underWater = loadImage("image/FLAPPYbg.png");
+  seaweed = loadImage("image/FLAPPYseaweed.png");
   scoreNumber = loadFont("BoldPixels.ttf");
-  flapSound = loadSound("./sound/flapboing.mp3");
-  hitSound = loadSound("./sound/boinghit.mp3");
-  bgm = loadSound("./sound/littlemermaid.mp3")
-  gameOver = loadImage("gameover.png");
-  plusSound = loadSound("./sound/bell.wav");
+  flapSound = loadSound("sound/popcartoon.mp3");
+  hitSound = loadSound("sound/boinghit.mp3");
+  bgMusic = loadSound("sound/editedBGM.mp3")
+  gameOver = loadImage("image/gameover.png");
+  plusSound = loadSound("sound/bell.wav");
+  bubbleImg = loadImage("image/bubbles.png");
 }
 
 function setup() {
@@ -48,7 +51,8 @@ function setup() {
   pipes = [];
   spawnCounter = 0;
   score = 0;
-}
+  }
+
 
 function draw() {
   image(underWater, width / 2, height / 2);
@@ -67,9 +71,7 @@ function draw() {
     textSize(55);
     text("Press SPACE", width / 2, height / 4);
     text("to Start", width / 2, height / 4 + 50);
-  
-   bgm.loop();
-   bgm.setVolume(2);
+
 
     // Draw bird idle
     bird.show();
@@ -80,10 +82,24 @@ function draw() {
   bird.update();
 
   // Spawn pipes on a timer
+  bubbleCounter++;
   spawnCounter++;
   if (spawnCounter >= SPAWN_RATE) {
     pipes.push(new Pipe(width + 40));
     spawnCounter = 0;
+  }
+
+  if (bubbleCounter >= SPAWN_RATE) {
+    bubbles.push(new Bubble());
+    bubbleCounter = 30;
+  }
+
+  for (let i = bubbles.length - 1; i>= 0; i --){
+    bubbles [i].update();
+    bubbles[i].show();
+    if (bubbles[i].offscreen()) {
+      bubbles.splice(i, 1);
+    }
   }
 
   // Update + draw pipes
@@ -95,12 +111,12 @@ function draw() {
     if (pipes[i].hits(bird)) {
       noLoop();
       fill(255);
-      textFont(scoreFont);
       textSize(80);
       console.log("Game Over");
       image(gameOver, width / 2, height / 2.5, 400, 400);
       //text("GAME OVER", width / 2, height / 2);
       hitSound.play();
+      bgMusic.stop();
     }
 
     // Score: check if bird has passed pipe
@@ -121,7 +137,6 @@ function draw() {
     noLoop();
     fill(255);
     console.log("Game Over");
-    textFont(scoreFont);
     textSize(80);
     image(gameOver, width / 2, height / 2.5, 400, 400);
     //text("GAME OVER", width / 2, height / 2);
@@ -158,10 +173,15 @@ function handleInput() {
 function keyPressed() {
   if (key === " " || keyCode === UP_ARROW) {
     if (!started) {
-      started = true; // start the game
+      started = true; // start the game 
+      bgMusic.play();
+      bgMusic.setVolume(5);
+  
     }
     bird.flap();
     flapSound.play();
+    flapSound.setVolume(0.5);
+    
   }
 }
 
@@ -172,7 +192,7 @@ class Bird {
     this.vel = createVector(0, 0);
     this.acc = createVector(0, 0);
     this.r = 26; // radius
-    this.hitR = 18;
+    this.hitR = 18; //added hitR to adjust the jelly
     this.gravity = 0.5; // downward force
     this.flapStrength = -9.0; // upward kick
 
@@ -274,6 +294,33 @@ class Pipe {
     const belowGap = bird.pos.y + bird.r > this.bottom;
 
     return withinX && (aboveGap || belowGap);
+  }
+}
+
+class Bubble {
+  constructor() {
+  this.x = random(0, width);
+  this.y = height + random(20, 200);
+  this.r = random(12, 30);
+  this.speed = random(0.6, 2.0);
+  this.drift = random(-0.6, 0.6);
+  }
+
+  update (){
+    this.y -= this.speed;
+    this.x += this.drift;
+  }
+
+  show(){
+    push();
+    translate(this.x, this.y);
+    imageMode(CENTER);
+    image(bubbleImg, 0, 0, this.r * 2, this.r * 2)
+    pop();
+  }
+
+  offscreen(){
+    return this.y < -this.r;
   }
 }
 
