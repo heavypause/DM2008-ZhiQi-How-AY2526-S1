@@ -24,22 +24,22 @@ let spawnCounter = 0; // timer
 let bubbleCounter = 0; // bubble timer
 const SPAWN_RATE = 90; // ~ every 90 frames at 60fps ≈ 1.5s
 const PIPE_SPEED = 3;
-let PIPE_GAP = 180; // gap height (try 100–160)
+let PIPE_GAP = 180; // gap height (increased to make game more playablea)
 const PIPE_W = 60;
 
 /* ----------------- Setup & Draw ----------------- */
 function preload() {
   birdIdle = loadImage("image/bloop1.png"); // idle state
   birdFlap = loadImage("image/bloop2.png"); // flapping state
-  underWater = loadImage("image/FLAPPYbg.png");
-  seaweed = loadImage("image/FLAPPYseaweed.png");
-  scoreNumber = loadFont("BoldPixels.ttf");
+  underWater = loadImage("image/FLAPPYbg.png"); //pixel background drawn in aseprite
+  seaweed = loadImage("image/FLAPPYseaweed.png"); //pixel seaweed
+  scoreNumber = loadFont("BoldPixels.ttf"); //pixel font
   flapSound = loadSound("sound/popcartoon.mp3");
-  hitSound = loadSound("sound/boinghit.mp3");
+  hitSound = loadSound("sound/boinghit.mp3"); //jellyfish bounce
   bgMusic = loadSound("sound/editedBGM.mp3")
   gameOver = loadImage("image/gameover.png");
   plusSound = loadSound("sound/bell.wav");
-  bubbleImg = loadImage("image/bubbles.png");
+  bubbleImg = loadImage("image/bubbles.png"); //added image, sound and fonts for immersive gameplay, did ask AI for the code for fonts and sounds
 }
 
 function setup() {
@@ -63,7 +63,7 @@ function draw() {
     textAlign(CENTER);
     textFont(scoreNumber);
     textSize(55);
-    text("Press SPACE", width / 2, height / 4 - 5);
+    text("Press SPACE", width / 2, height / 4 - 5); //added shadow to scorefont so its consistent to gameover image
     text("to Start", width / 2, height / 4 + 45);
     fill(0);
     textAlign(CENTER);
@@ -89,7 +89,7 @@ function draw() {
     spawnCounter = 0;
   }
 
-  if (bubbleCounter >= SPAWN_RATE) {
+  if (bubbleCounter >= SPAWN_RATE) { //needed help with chatgpt on why using spawncounter didn't work 
     bubbles.push(new Bubble());
     bubbleCounter = 30;
   }
@@ -192,7 +192,7 @@ class Bird {
     this.vel = createVector(0, 0);
     this.acc = createVector(0, 0);
     this.r = 26; // radius
-    this.hitR = 18; //added hitR to adjust the jelly
+    this.hitR = 18; //wanted to adjust the jelly radius, AI suggested a new hitR
     this.gravity = 0.5; // downward force
     this.flapStrength = -9.0; // upward kick
 
@@ -304,7 +304,8 @@ class Bubble {
   this.r = random(12, 30);
   this.speed = random(0.6, 2.0);
   this.drift = random(-0.6, 0.6);
-  }
+  }// apply array concepts
+   //but did end up asking AI on whats missing in code
 
   update (){
     this.y -= this.speed;
