@@ -2,7 +2,6 @@
 // Closer the object, brighter the LED
 
 int usSensorPin = A0;  // select input pin
-int ledPin = 9;
 
 float usMaxRange = 520.0;
 float dataSize = 1023.0;  // 10-bit data
@@ -34,15 +33,11 @@ void loop() {
   brightness = map(distVal, 2, 500, 0, 255);
   brightness = constrain(brightness, 0, 255);
 
-  analogWrite(ledPin, brightness);
+  Serial.print(distVal);
+  Serial.println("cm");
 
-//Serial.print(distVal);
-//Serial.println("cm");
+  Serial.print("Brightness is at:");
+  Serial.println(brightness);
 
-//Serial.print("Brightness is at:");
-//Serial.println(brightness);
-
-Serial.println(distVal);
-
-  delay(100);
+  delay(500);
 }
