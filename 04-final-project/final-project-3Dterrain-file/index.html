@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>3D Terrain with Sliders</title>
+    <style>
+      body {
+        margin: 0;
+        background: #222;
+        color: white;
+        font-family: sans-serif;
+      }
+      #ui {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 10;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 6px;
+        border-radius: 5px;
+      }
+      #ui label {
+        display: block;
+        margin-top: 6px;
+      }
+      #ui input[type="range"] {
+        width: 140px;
+      }
+      .color-group {
+        margin-top: 8px;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        padding-top: 4px;
+        font-size: 12px;
+      }
+      .color-group span {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 2px;
+      }
+      .color-group label {
+        display: inline-block;
+        margin-right: 6px;
+      }
+      .color-group input[type="color"] {
+        width: 40px;
+        height: 20px;
+        padding: 0;
+        border: none;
+        background: transparent;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="ui">
+      <label>
+        Noise Scale
+        <input id="noiseSlider" type="range" min="1" max="100" value="20" />
+      </label>
+
+      <label>
+        Height Scale
+        <input id="heightSlider" type="range" min="1" max="100" value="50" />
+      </label>
+
+      <label>
+        Zoom
+        <input id="zoomSlider" type="range" min="1" max="100" value="50" />
+      </label>
+
+      <div class="color-group">
+        <span>Water</span>
+        <label>
+          Min
+          <input type="color" id="waterMin" value="#1eb0fb" />
+        </label>
+        <label>
+          Max
+          <input type="color" id="waterMax" value="#28ffff" />
+        </label>
+      </div>
+
+      <div class="color-group">
+        <span>Sand</span>
+        <label>
+          Min
+          <input type="color" id="sandMin" value="#d7c09e" />
+        </label>
+        <label>
+          Max
+          <input type="color" id="sandMax" value="#fff6c1" />
+        </label>
+      </div>
+
+      <div class="color-group">
+        <span>Grass</span>
+        <label>
+          Min
+          <input type="color" id="grassMin" value="#02a69b" />
+        </label>
+        <label>
+          Max
+          <input type="color" id="grassMax" value="#76ef7c" />
+        </label>
+      </div>
+
+      <div class="color-group">
+        <span>Trees</span>
+        <label>
+          Min
+          <input type="color" id="treesMin" value="#16b58d" />
+        </label>
+        <label>
+          Max
+          <input type="color" id="treesMax" value="#0a9171" />
+        </label>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    <script src="sketch.js"></script>
+  </body>
+</html>
