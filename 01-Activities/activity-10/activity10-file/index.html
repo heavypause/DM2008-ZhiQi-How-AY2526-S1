@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Control Center</title>
+
+    <!-- p5.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/addons/p5.dom.min.js"></script>
+
+    <style>
+        #colorBtn {
+            background: #83caff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.25s ease, background 0.25s ease;
+            box-shadow: 0 4px 10px rgba(31, 127, 255, 0.4);
+        }
+
+        #colorBtn:hover {
+            transform: scale(1.2);
+            background: #5597ff;
+            box-shadow: 0 6px 14px rgba(31, 127, 255, 0.4);
+        }
+
+        #colorBtn:active {
+            transform: scale(1.3);
+            background: #336ee6
+        }
+
+        #sizeSlider {
+            accent-color: #4a9fff;
+            transition: 0.25s ease;
+        }
+
+        #sizeSlider:hover {
+            transform: scale(1.15);
+            filter: drop-shadow(0  0 6px #4a9fff);
+        }
+
+        #sizeSlider:active {
+            transform: scale(1.2);
+            accent-color: #88c0ff;
+        }
+
+        #shapeSelect {
+            appearance: none;
+            background: linear-gradient(135deg, #4aa8ff, #1f7fff);
+            color: rgb(0, 0, 0);
+            
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: none;
+            font-size: 15px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segeo UI", sanserif;
+
+            cursor: pointer;
+            transition: 0.25s ease;
+            box-shadow: 0 4px 10px rgba(31, 127, 255, 0.35);
+        }
+
+        #shapeSelect:hover {
+            transform: scale(1.08);
+            box-shadow: 0 6px 14px rgba(31, 127, 255, 0.5);
+        }
+
+        #shapeSelect:active {
+            transform: scale(1.2);
+            box-shadow: 0 6px 14px rgba (31, 127, 255, 0.5);
+        }
+
+        #shapeSelect:active {
+            transform: scale(1.12);
+            background: linear-gradient(135deg, #1f7fff, #005be0);
+        }
+    </style>
+  </head>
+
+  <body>
+    <script src="sketch.js"></script>
+  </body>
+</html>
